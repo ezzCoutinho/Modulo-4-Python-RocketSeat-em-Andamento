@@ -16,14 +16,16 @@ login_manager.init_app(app)
 
 @app.route("/login",  methods = ["POST"])
 def login():
-  data = request.json()
+  data = request.json
   username = data.get("username")
   password = data.get("password")
 
   if username and password:
-    pass
-
-  return jsonify({"message": "Credenciais inválidas."})
+    user = User.query.filter_by(username=username).first()
+    if user and user.password == password:
+      return jsonify({"message": "Autenticação foi realizada com sucesso!"})
+  
+  return jsonify({"message": "Credenciais inválidas."}), 400
 
 @app.route("/hello-world", methods = ["GET"])
 def hello_world():
