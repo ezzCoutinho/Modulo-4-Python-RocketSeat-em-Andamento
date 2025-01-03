@@ -14,7 +14,7 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 # Session <- conexão ativa
 
-@login_manager.user_loader
+@login_manager.user_loader #salvando o usuário em cookie
 def load_user(user_id):
   return User.query.get(user_id)
 
@@ -38,6 +38,19 @@ def login():
 def logout():
   logout_user()
   return jsonify({"message": "Logout realizado com sucesso!"})
+
+@app.route("/user", methods = ["POST"])
+@login_required
+def create_user():
+  data = request.json
+  username = data.get("username")
+  password = data.get("password")
+  if username and password:
+    user = User(username=username, password=password)
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({"message": "Conta criada com sucesso!"})
+  return jsonify({"message": "Dados inválidos"}), 400
 
 @app.route("/hello-world", methods = ["GET"])
 def hello_world():
