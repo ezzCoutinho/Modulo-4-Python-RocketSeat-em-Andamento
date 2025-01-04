@@ -7,7 +7,6 @@ Nos vimos a SECRET_KEY, onde é bem parecida com o KEY_STRING, vimos também SQL
 
 dia 02/01
 https://www.notion.so/Python-dia-02-01-16fbc5c3824d80e4b0a9f550cc302025
-
 Hoje vimos, mais sobre autenticação de login em flask_login/
 fornece uma seção de gerenciamento de login, logout e lembrar a sessão(cookies). Necessitando de um de banco de dados para armazenar os cookies. Rotas que envolve requisição de autenticação é recomendável que seja feita com methods POST. 
 Fazenda a conversão do data em uma rota; data = request.json (request é uma função do flask.)
@@ -18,3 +17,11 @@ current_user(is_authenticated), nos trás mais informações do usuário logado.
 user_loader(), salva a sessão em cookies.
 logout()GET, desconecta da sessão.
 @login_required, é um decorator que nos deixa fazer execução caso estejamos logados.
+
+dia 03/01
+https://www.notion.so/dia-03-01-and-Python-170bc5c3824d8054bd3ff6945d4a207d
+Hoje vimos, sobre a criação de rotas, PUT, onde devemos sim preservar mais a atualização de senha, podendo usar até mesmo alguns hashs;
+query, faz uma busca de chaves em nosso banco de dados, podendo chamar get para pegar a chave.
+request.json, sempre será oq o usuário nos mandar...
+Todas as vezes que formos mexer de forma geral em um banco de dados, precisamos dar o commit(), para que a alteração seja feita.
+current_user.id, é o id do nosso usuário atual.
