@@ -46,7 +46,7 @@ def create_user():
   username = data.get("username")
   password = data.get("password")
   if username and password:
-    user = User(username=username, password=password)
+    user = User(username=username, password=password, role="user")
     db.session.add(user)
     db.session.commit()
     return jsonify({"message": "Conta criada com sucesso!"})
@@ -58,7 +58,7 @@ def read_user(id_user):
   user = User.query.get(id_user)
 
   if user:
-    return {"username": user.username}
+    return {"username": user.username, "role": user.role}
   
   return jsonify({"message":"Usuário não encontrado."}), 404
 
@@ -68,6 +68,9 @@ def read_user(id_user):
 def update_user(id_user):
   data = request.json
   user = User.query.get(id_user)
+
+  if id_user != current_user.id and current_user.role == "user":
+    return jsonify({"message": "Você não tem esta permissão."}), 403
 
   if user and data.get("password"):
     user.password = data.get("password")
@@ -85,10 +88,13 @@ def delete_user(id_user):
   if id_user == current_user.id:
     return jsonify({"message": "Usuário atual não pode ser deletado."}), 403
 
+  if current_user.role != "admin":
+    return jsonify({"message": "Você não tem esta permissão."}), 403
+  
   if user and id_user != current_user.id:
     db.session.delete(user)
     db.session.commit()
-    return {"message":f"Ok! Usuário {id_user} deletado com sucesso."}
+    return {"message":f"Ok! {current_user.username} admin, o usuário {id_user} deletado com sucesso."}
   
   return jsonify({"message":"Usuário não encontrado."}), 404
 
