@@ -33,3 +33,15 @@ docker, tem como função criar containers, podendo simular um banco de dados no
 dando suporte ao mysql.
 Mysql é parecido com o sqlite, só que ele trabalha com mais requisições, e também
 trabalha com objetos relacionais, é bastante usado no mercado.
+
+dia 05/01
+https://www.notion.so/Python-dia-05-01-172bc5c3824d803a8ed3d599d6a0c12a
+Hoje vimos sobre a criptografia de senhas com a dependência bcrypt
+criptografia se dar através do método hashpw(), que vem do bcrypt,
+ele recebe dois elementos, a senha em formato binário: password = b"123", e a
+quantidade de rounds(segurança) que ela vai ter, gensalt(), que também é um método.
+também temos o verificador, checkpw(), recebe dois elementos, todos em formatos
+binários, o primeiro oq o usuário mandou, data = request.json, password = data.get("password")
+checkpw(str.encode(password), str.encode(user.password)).
+Lembrando sempre que uma senha for salva em um banco de dados ela será retornada em string, por isso
+devemos converter em bytes, para que a checagem possa ser feita.
