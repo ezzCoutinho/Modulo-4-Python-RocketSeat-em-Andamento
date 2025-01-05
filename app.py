@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from models.user import User # Temos que trazer a modelagem dos dados, para o app
 from database import db
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
+from bcrypt import hashpw, gensalt, checkpw
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "your-secret-key"
@@ -26,7 +27,7 @@ def login():
 
   if username and password:
     user = User.query.filter_by(username=username).first()
-    if user and user.password == password:
+    if user and checkpw(str.encode(password), str.encode(user.password)):
       login_user(user)
       print(current_user.is_authenticated)
       return jsonify({"message": "Autenticação foi realizada com sucesso!"})
@@ -40,16 +41,17 @@ def logout():
   return jsonify({"message": "Logout realizado com sucesso!"})
 
 @app.route("/user", methods = ["POST"])
-
 def create_user():
   data = request.json
   username = data.get("username")
   password = data.get("password")
   if username and password:
-    user = User(username=username, password=password, role="user")
+    hashed_password = hashpw(str.encode(password), gensalt())
+    user = User(username=username, password=hashed_password, role="user")
     db.session.add(user)
     db.session.commit()
     return jsonify({"message": "Conta criada com sucesso!"})
+  
   return jsonify({"message": "Dados inválidos"}), 400
 
 @login_required
