@@ -25,3 +25,11 @@ query, faz uma busca de chaves em nosso banco de dados, podendo chamar get para 
 request.json, sempre será oq o usuário nos mandar...
 Todas as vezes que formos mexer de forma geral em um banco de dados, precisamos dar o commit(), para que a alteração seja feita.
 current_user.id, é o id do nosso usuário atual.
+
+dia 04/01
+https://www.notion.so/dia-04-01-and-Python-171bc5c3824d801eb1ebe53fb7070af8
+Hoje vimos sobre o docker e uma alternativa ao sqlite, o mysql
+docker, tem como função criar containers, podendo simular um banco de dados no nosso pc
+dando suporte ao mysql.
+Mysql é parecido com o sqlite, só que ele trabalha com mais requisições, e também
+trabalha com objetos relacionais, é bastante usado no mercado.
